@@ -1,0 +1,309 @@
+.container {
+  width: 100%;
+  padding: 0 100px;
+}
+
+
+
+.featured-product {
+  background-color: rgb(219, 212, 212);
+  width: 100%;
+  padding: 50px 10px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.product-title {
+  font-size: 1rem;
+}
+
+.featured-product .product-feature {
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.featured-product .product-catagory {
+  color: white;
+  font-size: 8rem;
+  font-weight: bold;
+}
+
+
+
+.featured-product .shop {
+  background-color: rgb(245, 45, 45);
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.product {
+  width: 350px;
+  position: absolute;
+  top: 0;
+  right: 30%;
+}
+
+.product-desc {
+  width: 200px;
+  position: absolute;
+  right: 10%;
+  bottom: 5%;
+  font-size: 1rem;
+  text-align: end;
+}
+
+
+.product-desc-title {
+  font-weight: bold;
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.product-desc-details {
+  color: rgb(155, 155, 155);
+}
+
+
+
+
+
+
+
+/* Best seller section */
+
+.best-sellers {
+  width: 100%;
+  margin-top: 30px;
+  padding: 0 10%;
+  margin-bottom: 30px;
+}
+
+.best-seller-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: rgb(9, 9, 53);
+  text-align: center;
+}
+
+.best-seller-desc {
+  color: rgb(143, 143, 143);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.best-seller-products {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px 10px;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+
+.best-seller-product {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-description {
+  color: rgb(134, 132, 132);
+}
+
+.product-price {
+  font-weight: bold;
+}
+
+.best-seller-product img {
+  width: 100%;
+  border-radius: 10px;
+  background-color: rgb(219, 219, 219);
+}
+
+
+/* Special offer */
+
+.special-offer {
+  width: 100%;
+  padding: 50px 30px;
+  border-radius: 10px;
+  position: relative;
+  background-color: rgb(243, 40, 40);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.offer-how-much {
+  font-size: 14px;
+}
+
+.left-section {
+  width: 200px;
+}
+.right-section {
+  width: 400px;
+}
+.offer-desc {
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+
+
+.offer-title {
+  font-size: 14px;
+}
+
+.offer-type {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.shop-now {
+  margin-top: 30px;
+  background-color: white;
+  color: rgb(243, 40, 40);
+  border: none;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.special-product {
+  width: 360px;
+  position: absolute;
+  top:-100px;
+  left: 20%;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: rgb(11, 30, 114);
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+
+
+
+@media (max-width: 1130px) {
+  .right-section {
+    width: 300px;
+  }
+}
+
+
+@media (max-width: 990px) {
+  .special-offer {
+    padding: 50px 10px;
+  }
+  .right-section {
+    width: 250px;
+  }
+  .container {
+    width: 100%;
+    padding: 0 50px;
+  }
+  .featured-product .product-catagory {
+    font-size: 4rem;
+  }
+  .product {
+    width: 250px;
+  }
+  .product-desc {
+    right: 5%;
+  }
+}
+
+@media (max-width: 816px) {
+  .special-product {
+    width: 300px;
+    left: 25%;
+  }
+  .left-section {
+    width: 150px;
+  }
+  .right-section {
+    width: 200px;
+  }
+  .product {
+    width: 200px;
+    right: 2%;
+    top: -10%;
+  }
+  .product-desc {
+    font-size: .8rem;
+    bottom: 1%;
+  }
+}
+
+@media (max-width: 730px) {
+  .special-product {
+    width: 200px;
+    top: 40%;
+    left: -5%;
+  }
+  .offer-desc {
+    font-size: 2rem;
+  }
+  .offer-type {
+    font-size: 2rem;
+  }
+  .left-section {
+    width: 150px;
+  }
+  .right-section {
+    width: 200px;
+  }
+}
+@media (max-width: 530px) {
+
+  .product {
+    width: 220px;
+    right: 0;
+    top: 10%;
+  }
+  .product-desc {
+    margin-top: 20px;
+    position: relative;
+    text-align: start;
+    right: 0;
+    font-size: .8rem;
+  }
+}
+
+
+@media (max-width: 400px) {
+  .featured-product .product-catagory {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  .featured-product .product-feature {
+    font-size: 1.5rem;
+  }
+  .product {
+    width: 150px;
+    right: 0;
+    top: 55%;
+  }
+  .product-desc {
+    margin-top: 20px;
+    position: relative;
+    text-align: start;
+    right: 0;
+    font-size: .8rem;
+  }
+
+  .special-product {
+    width: 150px;
+    top: 50%;
+    left: -5%;
+  }
+}

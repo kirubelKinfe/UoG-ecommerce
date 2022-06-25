@@ -10,15 +10,13 @@
     <link rel="stylesheet" href="css/products.css">
   </head>
   <body>
+
     <nav class="navbar">
       <div class="left">
-        <div class="logo"><a href="index.html">UoG-ecommerce</a></div>
+        <div class="logo"><a href="index.php">UoG-ecommerce</a></div>
         <ul>
           <li>
             <a href="#" class="catagory">Catagory</a>
-          </li>
-          <li>
-            <a href="#" class="featured">Featured</a>
           </li>
           <li>
             <a href="#" class="best-selling">Best Sellers</a>
@@ -26,11 +24,9 @@
         </ul>
       </div>
 
-      <a href="#">
-        <div class="cart">
+      <a class="cart" href="cart.php">
           <img src="img/cart.png" />
           <div class="cart-count">3</div>
-      </div>
       </a>
     </nav>
 

@@ -8,8 +8,4 @@ body {
   min-width: 100%;
   min-height: 100vh;
   font-family:  Helvetica Arial, sans-serif ;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  background-color: white;
 }

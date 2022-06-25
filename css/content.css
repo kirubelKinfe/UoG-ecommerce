@@ -80,17 +80,18 @@
 
 
 
-/* Best seller section */
+/* Products section */
 
-.best-sellers,
+.products-view,
 .catagories {
+  margin-top: 55px;
   width: 100%;
   margin-top: 30px;
   padding: 0 100px;
   margin-bottom: 30px;
 }
 
-.best-seller-title,
+.products-view-title,
 .catagories-title {
   font-size: 3rem;
   font-weight: bold;
@@ -98,35 +99,35 @@
   text-align: center;
 }
 
-.best-seller-desc,
+.products-view-desc,
 .catagories-desc {
   color: rgb(143, 143, 143);
   margin-bottom: 30px;
   text-align: center;
 }
 
-.best-seller-products {
+.products-list {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px 20px;
+  gap: 40px 40px;
   margin-bottom: 80px;
 }
 
-.best-seller-product {
-  width: 300px;
+.product-item {
+  width: 250px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   border-radius: 4px;
-  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+  box-shadow: rgba(17, 17, 26, 0.05) 2px 1px 8px, rgba(17, 17, 26, 0.1) 1px 1px 8px;
   transition: all .2s ease;
   cursor: pointer;
 }
 
-.best-seller-product:hover {
+.product-item:hover {
   box-shadow: rgba(0, 0, 0, 0.2) 10px 10px 50px -10px;
 }
 .product-info {
@@ -161,7 +162,7 @@
   color: white;
 }
 
-.best-seller-product img {
+.product-item img {
   width: 100%;
   height: 100%;
   border-top-left-radius: 4px;

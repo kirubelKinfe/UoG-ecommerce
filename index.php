@@ -113,7 +113,7 @@ if ($res == true) {
         </a>
         <a href="mobile.php">
           <div class="catagorie">
-            <img class="thumbnail" src="img/Mobile Assesories/mobile2.jpeg" alt="" />
+            <img class="thumbnail" src="img/MobileAssesories/mobile2.jpeg"/>
             <div class="men-catagorie">Mobile Assesaries</div>
           </div>
         </div>
@@ -121,26 +121,10 @@ if ($res == true) {
         
       </div>
 
-      <div id="special-offer" class="special-offer">
-        <div class="left-section">
-          <div class="offer-how-much">20% OFF</div>
-          <div class="offer-desc">FINE SMILE</div>
-          <div class="offer-date">15 Nov to 7 dec</div>
-        </div>
-        <div class="right-section">
-          <div class="offer-title">20% OFF</div>
-          <div class="offer-type">Summer Sale</div>
-          <div class="offer-discription">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iure,
-            sunt!
-          </div>
-          <button class="shop-now">Shop Now</button>
-        </div>
-        <img class="special-product" src="img/Mobile Assesories/mobile5.png" alt="" />
-      </div>
+      
 
       <footer class="footer">
-        <div class="copyright">c 2022 UoG ecommerce</div>
+        <div class="copyright">&copy; 2022 UoG ecommerce</div>
         <div class="social-medias"></div>
       </footer>
     </main>

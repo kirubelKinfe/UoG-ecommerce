@@ -11,7 +11,7 @@ function productComponent($procuctName, $procuctPrice, $productImg, $product_id,
           <div class='product-info'>
             <div class='product-info-desc'>
               <div class='product-description'>$procuctName</div>
-              <div class='product-price'>$$procuctPrice</div>
+              <div class='product-price'>Br<span>$procuctPrice</span> </div>
             </div>
             <button type='submit' name='add' class='cart-button'>Add to cart</button>
             <label id='alert' style='color: red;
@@ -33,12 +33,21 @@ function cartComponent($procuctName, $procuctPrice, $productImg, $product_id)
         <img src=$productImg>
       </div>
       <div class='cart-name'>$procuctName</div>
-      <div class='cart-price'>$procuctPrice</div>
-      <input class='cart-quantity' type='number' value='1'>
+      <div class='cart-price'>Br<span id='price'>$procuctPrice</span></div>
+      <input class='cart-quantity' id='quantity' type='number' value='1'>
+      <div class='cart-subtotal'>Br<span id='subtotal'>$procuctPrice</span></div>
       <button type='submit' name='remove' class='remove'>X</button>
     </div>
     </form>
     ";
+}
+
+function cartSubtotal($productName, $productPrice) {
+  echo "
+  <div class='row'>
+        <div>$productName</div>
+        <div>Br<span id='payment-subtotal'>$productPrice</span></div>
+      </div>";
 }
 
 function cartSession() {

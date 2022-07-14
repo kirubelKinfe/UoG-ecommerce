@@ -2,11 +2,12 @@
 
 function productComponent($procuctName, $procuctPrice, $productImg, $product_id, $url)
 {
+
     echo "
     <form action=$url method='post'>
       <div class='product-item'>
           <div class='product-img'>
-            <img class='thumbnail' src=$productImg alt=$procuctName />
+            <img class='thumbnail' src='img/$productImg' alt=$procuctName />
           </div>
           <div class='product-info'>
             <div class='product-info-desc'>
@@ -17,10 +18,10 @@ function productComponent($procuctName, $procuctPrice, $productImg, $product_id,
             <label id='alert' style='color: red;
             display:none;'>Product already in the cart!</label>
             <input type='hidden' name='product_id' value=$product_id>
+              </div>
           </div>
-      </div>
-      </form>
-    ";
+          </form>
+        ";
 }
 
 function cartComponent($procuctName, $procuctPrice, $productImg, $product_id)
@@ -30,9 +31,9 @@ function cartComponent($procuctName, $procuctPrice, $productImg, $product_id)
     
     <div class='cart-product'>
       <div class='cart-img'>
-        <img src=$productImg>
+        <img src='img/$productImg'>
       </div>
-      <div class='cart-name'>$procuctName</div>
+      <div class='cart-name' id='product_name'>$procuctName</div>
       <div class='cart-price'>Br<span id='price'>$procuctPrice</span></div>
       <input class='cart-quantity' id='quantity' type='number' value='1'>
       <div class='cart-subtotal'>Br<span id='subtotal'>$procuctPrice</span></div>
@@ -45,9 +46,9 @@ function cartComponent($procuctName, $procuctPrice, $productImg, $product_id)
 function cartSubtotal($productName, $productPrice) {
   echo "
   <div class='row'>
-        <div>$productName</div>
-        <div>Br<span id='payment-subtotal'>$productPrice</span></div>
-      </div>";
+    <p>$productName</p>
+    <p>Br<span id='payment-subtotal'>$productPrice</span></p>
+  </div>";
 }
 
 function cartSession() {
@@ -60,7 +61,7 @@ function cartSession() {
           $productArrayId = array_column($_SESSION['cart'], 'product_id');
 
           if (in_array($_POST['product_id'], $productArrayId)) {
-              echo "<script>alert('product already in the cart!')</script>";
+              $_SESSION['message'] = "<div class='message'>Product already in the cart!</div>";
           } else {
               $count = count($_SESSION['cart']);
               $productArray = array(
@@ -74,7 +75,6 @@ function cartSession() {
           );
 
           $_SESSION['cart'][0] = $productArray;
-          print_r($_SESSION['cart']);
 
       }
   }

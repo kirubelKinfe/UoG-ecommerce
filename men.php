@@ -26,6 +26,12 @@ cartSession();
         <div class="products-view-desc">
           Clothes and shoes for men
         </div>
+        <?php
+          if (isset($_SESSION['message'])) {
+              echo $_SESSION['message'];
+              unset($_SESSION['message']);
+          }
+        ?>
 
         <div class="products-list">
             <?php

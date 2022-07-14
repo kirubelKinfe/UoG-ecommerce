@@ -36,7 +36,8 @@
 
 .left ul a {
   text-decoration: none;
-  color: rgb(34, 32, 32);
+  color: #000;
+  font-weight: bold;
 }
 
 .left ul a:hover {

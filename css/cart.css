@@ -93,6 +93,15 @@
   margin-bottom: 20px;
 }
 
+#total {
+  border:none;
+  width: 100px;
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
+}
+
 .left-section{
   width: 100%;
   display: flex;
@@ -159,6 +168,11 @@
 
 .order-product a {
   color: black;
+}
+
+.order-product p {
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 .place-order {

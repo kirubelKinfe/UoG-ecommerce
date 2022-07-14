@@ -11,7 +11,7 @@
             <a href="women.php">Women's</a>
           </li>
           <li>
-            <a href="mobile.php">Mobile Assesaries</a>
+            <a href="electronics.php">Electronics</a>
           </li>
           
         </ul>

@@ -3,7 +3,6 @@
 
   if(!isset($_SESSION['user'])) {
     $_SESSION['no-login-message'] = "<div class='errorLogin'>Please login to access Admin Panel</div>";
-
     header('location:'.SITURL.'admin/');
   }
 
@@ -28,7 +27,8 @@
         <li><a href="manage-admin.php">Admin</a></li>
         <li><a href="manage-product.php">Products</a></li>
         <li><a href="manage-order.php">Orders</a></li>
-        <li><a href="logout.php">Logout</a></li>
+        <li><a href="delivered-Orders.php">DeliveredOrders</a></li>
+        <li><a href="logout.php" id='logout'>Logout</a></li>
       </ul>
   </div>
   <!-- Menu section ends -->

@@ -1,3 +1,4 @@
+
 <?php
 
 require_once 'includes/connection.php';
@@ -18,17 +19,52 @@ cartSession();
     <link rel="stylesheet" href="css/navbar .css" />
   </head>
   <body>
-    <div class="heading">Welcome to UoG-ecommerce!</div>
-   <?php require_once 'includes/header.php'?>
+    <nav class="navbar">
+      <div class="left">
+        <div class="logo">
+          <a href="index.php">UoG-ecommerce</a>
+        </div>
+        <ul>
+          <li>
+            <a href="#home" id="h">Home</a>
+          </li>
+          <li>
+            <a href="#featured">Featured</a>
+          </li>
+          <li>
+            <a href="#best-sellers">Best Sellers</a>
+          </li>
+          <li>
+            <a href="#catagories">Catagories</a>
+          </li>
+          
+        </ul>
+      </div>
+
+      <a class="cart" href="cart.php">
+          <img src="img/cart.png" />
+          <?php 
+            if(isset($_SESSION['cart'])) {
+              $count = count($_SESSION['cart']);
+              echo "<div class='cart-count'>$count</div>";
+            } else {
+              echo "<div class='cart-count'>0</div>";
+            }
+          ?>
+          
+      </a>
+  </nav>
+  <a name='home'></a>
 
    <div class="banner">
     <div>
-      <p>Trade-in-offer</p>
+      <p>Welcome to UoG-ecommerce</p>
      <h1>Shopping Time</h1>
      <h3>Ontime Delivery</h3>
-     <a href="#catagory"><button>Check Catagories </button></a>
+     <a href="#catagory"><button class="btn-catagories" role="button">Check Catagories</button></a>
     </div>
-    <img class="banner-image" src="img/banner-image.png">
+    <img class="banner-image" src="img//banner-image.png">
+    
    </div>
 
 <?php
@@ -41,31 +77,30 @@ $product_name = $val['product_name'];
 $product_price = $val['product_price'];
 $product_image = $val['product_image'];
   echo "
+   <a name='featured'></a>
    <div class='products-view-title'>Featured Product</div>
       <div class='products-view-desc'>
            This is the best product of this year
       </div>
-      <br><br>
       <main class='container'>
       <form action='index.php' method='post'>
         <div id='featured' class='featured-product'>
-          <div class='product-title'>Nike</div>
-        <div class='product-feature'>$product_name</div>
+          <div class='product-title'>$product_name</div>
+        <div class='product-feature'>Just Do It</div>
         <div class='product-catagory'>Shoe</div>
-          <button type='submit' name='add' class='cart-button'>Add to cart</button>
+          <button type='submit' name='add' class='featured-button'>Add to cart</button>
           <input type='hidden' name='product_id' value=$product_id>
           <img class='product' src='img/$product_image'alt='featured-shoe' />
           <div class='product-desc'>
           <div class='product-desc-title'>Description</div>
           <div class='product-desc-details'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-            pariatur aperiam quam laudantium maxime enim ducimus quidem nulla
-            sed cum?
+            Get laced up for training, sport and lifestyle with the latest designs 
+            of men's shoes and sneakers from Nike.com.
           </div>
         </div>
         </div>
         
-      </form>
+      </form> 
   "
 ?>          
         
@@ -75,7 +110,8 @@ $product_image = $val['product_image'];
               unset($_SESSION['message']);
           }
         ?>
-        <div id="best-sellers" class="products-view">
+        <a name="best-sellers"></a>
+        <div class="products-view">
         <div class="products-view-title">Best Seller Products</div>
         <div class="products-view-desc">
           Those are our best selling products this year
@@ -83,7 +119,7 @@ $product_image = $val['product_image'];
         <div class="products-list">
      
 <?php
-$sql = "SELECT * FROM productTable WHERE buy_count > 10";
+$sql = "SELECT * FROM productTable WHERE buy_count > 10 ORDER BY product_id DESC";
 $res = mysqli_query($conn, $sql);
 
 if ($res == true) {
@@ -91,7 +127,7 @@ if ($res == true) {
 
     if ($row > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            productComponent($row['product_name'], $row['product_price'], $row['product_image'], $row['product_id'], './index.php');
+            productComponent($row['product_name'], $row['product_price'], $row['quantity'], $row['product_image'], $row['product_id'], './index.php');
         }
     }
 }
@@ -100,7 +136,8 @@ if ($res == true) {
         </div>
       </div>
 
-      <div id="catagories" class="catagories">
+      <a name="catagories"></a>
+      <div class="catagories">
         <a name='catagory'></a>
         <div class="catagories-title">Catagories</div>
         <div class="catagories-desc">
@@ -109,19 +146,19 @@ if ($res == true) {
         <div class="catagories-view">
           <a href="men.php">
             <div class="catagorie">
-              <img class="thumbnail" src="img/men5.jpg" alt="" />
+              <img class="thumbnail" src="img/14a71799-5888-4676-a3b3-6e61a0faef67.jpeg" alt="" />
               <div class="men-catagorie">Men's</div>
           </div>
         </a>
         <a href="women.php">
           <div class="catagorie">
-            <img class="thumbnail" src="img/women1.jpg" alt="" />
+            <img class="thumbnail" src="img/women5.jpg" alt="" />
             <div class="men-catagorie">Women's</div>
           </div>
         </a>
         <a href="electronics.php">
           <div class="catagorie">
-            <img class="thumbnail" src="img/electronics37.jpg"/>
+            <img class="thumbnail" src="img/electronics31.jpg"/>
             <div class="men-catagorie">Electronics</div>
           </div>
         </div>

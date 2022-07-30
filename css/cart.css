@@ -5,9 +5,15 @@
 
 .container h1 {
   font-weight: bold;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
-
+.danger {
+  text-align: center;
+  margin: 10px;
+  color: red;
+  font-weight: bold;
+}
 .cart-list {
   width: 100%;
   padding: 0 100px;
@@ -24,15 +30,28 @@
   justify-content: space-between;
   box-shadow: rgba(17, 17, 26, 0.05) 2px 1px 8px, rgba(17, 17, 26, 0.1) 1px 1px 8px;
   transition: all .2s ease;
+  position: relative;
+}
+
+.product-quantity {
+  position: absolute;
+  top:0;
+  right: 0;
+  background-color: black;
+  padding: 10px;
+  color: white;
 }
 
 .cart-img {
   width: 150px;
-  height: 150px;
+  position: relative;
 }
 
 .cart-img img {
   width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .cart-title {

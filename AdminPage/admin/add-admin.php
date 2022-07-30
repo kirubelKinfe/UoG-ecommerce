@@ -5,18 +5,42 @@
    <div class="wrapper">
       <h1>Add Admin</h1>
       <br><br>
-      <form action="" method="POST">
+      <form action="" method="POST" name="form" onsubmit="return formValidation()">
         <div class="left-section">
           <label>FullName</label>
           <input type="text" name="full_name" placeholder="Enter your name">
           <label>Username:</label>
           <input type="text" name="username" placeholder="Enter your username"></input>
+          <label>Type:</label>
+          <input type="text" name="type" placeholder="Enter your admin privilege"></input>
           <label>Password:</label>
           <input type="password" name="password" placeholder="Enter your password">
           <button type="submit" name="submit" class="btn-control">Add Admin</button>
         </div>
       </form>
    </div>
+   <script>
+   function formValidation() {
+      if(document.form.full_name.value == "") {
+        alert("please enter full name")
+        return false;
+      }
+      else if(document.form.username.value == "") {
+        alert("please enter username")
+        return false;
+      }
+      else if(document.form.type.value == "") {
+        alert("please enter username")
+        return false;
+      }
+      else if(document.form.password.value.length < 4) {
+        alert("please enter a valid password")
+        return false;
+      }
+    
+       
+    }
+   </script>
 </div>
  <!-- Main section ends -->
 <?php include "partials/footer.php"?>
@@ -31,11 +55,12 @@ if (isset($_POST['submit'])) {
     //1. Get the data from form
     $full_name = $_POST['full_name'];
     $username = $_POST['username'];
+    $type = $_POST['type'];
     $password = md5($_POST['password']); //password encryption with MD5
 
     //2. SQL Query to Save the data into database
     $sql = "INSERT INTO adminTable SET full_name='$full_name',
-    username='$username',
+    username='$username', type = '$type',
     password='$password'";
 
     //3. Execute Query and Save Data into database

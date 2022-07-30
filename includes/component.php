@@ -1,7 +1,6 @@
 <?php
 
-function productComponent($procuctName, $procuctPrice, $productImg, $product_id, $url)
-{
+function productComponent($procuctName, $procuctPrice, $quantity, $productImg, $product_id, $url){
 
     echo "
     <form action=$url method='post'>
@@ -18,26 +17,28 @@ function productComponent($procuctName, $procuctPrice, $productImg, $product_id,
             <label id='alert' style='color: red;
             display:none;'>Product already in the cart!</label>
             <input type='hidden' name='product_id' value=$product_id>
+            <div class='product-quantity'>$quantity</div>
               </div>
           </div>
           </form>
         ";
 }
 
-function cartComponent($procuctName, $procuctPrice, $productImg, $product_id)
-{
+function cartComponent($procuctName, $procuctPrice,$quantity, $productImg, $product_id){
     echo "
     <form action='./cart.php?action=remove&id=$product_id' method='post'>
     
     <div class='cart-product'>
       <div class='cart-img'>
         <img src='img/$productImg'>
+        <div class='product-quantity'>$quantity</div>
       </div>
       <div class='cart-name' id='product_name'>$procuctName</div>
       <div class='cart-price'>Br<span id='price'>$procuctPrice</span></div>
       <input class='cart-quantity' id='quantity' type='number' value='1'>
       <div class='cart-subtotal'>Br<span id='subtotal'>$procuctPrice</span></div>
-      <button type='submit' name='remove' class='remove'>X</button>
+      <button type='submit' name='remove' class='remove' onclick=\"return confirm('Are you sure you want ro delete this Cart Product?')\">X</button>
+      
     </div>
     </form>
     ";

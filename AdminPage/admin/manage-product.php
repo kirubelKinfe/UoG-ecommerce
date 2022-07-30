@@ -6,6 +6,10 @@
     <div class="wrapper">
       <h1>Manage Products</h1><br>
       <?php 
+        if (isset($_SESSION['type'])) {
+          echo "<div class='success' id='type'>" . $_SESSION['type'] . "</div>";
+        }
+
         if (isset($_SESSION['delete'])) {
           echo $_SESSION['delete'];
           unset($_SESSION['delete']);
@@ -24,20 +28,22 @@
 
       ?>  
 
-      <a href="<?php echo SITURL; ?>admin/add-product.php" class="btn-control">Add Product</a><br>
+      <a href="<?php echo SITURL; ?>admin/add-product.php" id='add' class="btn-control">Add Product</a><br>
 
-      <table class="tbl-full" cellpadding="30px" border='1' cellspacing="0px">
+      <table class="tbl-full" cellpadding="60px" border='1' cellspacing="0px">
         <tr>
           <th>S.N.</th>
           <th>Product_name</th>
           <th>Product_price</th>
           <th>Product_image</th>
           <th>Catagory</th>
+          <th>Quantity</th>
+          <th>Featured</th>
           <th>Actions</th>
         </tr>
 
         <?php
-          $sql = "SELECT * FROM productTable";
+          $sql = "SELECT * FROM productTable ORDER BY product_id DESC";
           $res = mysqli_query($conn, $sql);
 
           $productcount = 1;
@@ -54,6 +60,8 @@
                 $porduct_price = $rows['product_price'];
                 $product_image = $rows['product_image'];
                 $catagory = $rows['catagory'];
+                $quantity = $rows['quantity'];
+                $featured = $rows['featured'];
 
                 ?> 
                   <tr>
@@ -62,10 +70,12 @@
                     <td style="text-align:center"><?php echo $porduct_price; ?></td>
                     <td style="text-align:center"><?php echo " <img width='100px' src='../../img/$product_image' " ?></td>
                     <td style="text-align:center"><?php echo $catagory; ?></td>
-                    <td style="text-align:center">
-                      <a href="<?php echo SITURL; ?>admin/update-product.php?id=<?php echo $id; ?>" class="btn-secondary">Update Product</a> 
+                    <td style="text-align:center"><?php echo $quantity; ?></td>
+                    <td style="text-align:center"><?php echo $featured; ?></td>
+                    <td style="text-align:center" class="updates">
+                      <a href="<?php echo SITURL; ?>admin/update-product.php?id=<?php echo $id; ?>" id='update' class="btn-secondary">Update Product</a> 
                       <a href="<?php echo SITURL; ?>admin/delete-product.php?id=<?php echo $id; ?>
-                      " class="btn-danger" onclick="return confirm('Are you sure you want ro delete this product?')">Delete Product</a>
+                      " class="btn-danger" id='delete' onclick="return confirm('Are you sure you want ro delete this product?')">Delete Product</a>
                     </td>
                   </tr>
                 <?php
@@ -80,7 +90,18 @@
     
     </div>
   </div>
-  <!-- Main section ends -->
+  <script>
+    let type = document.querySelector('#type');
+    if(type.innerText == 'admin') {
+      document.querySelectorAll('#delete').forEach(item => {
+        item.style.display = 'none';
+      });
+      document.querySelectorAll('#update').forEach(item => {
+        item.style.display = 'none';
+      });
+      document.getElementById('add').style.display = 'none';
+    }
+  </script>
 
 
 <?php include "partials/footer.php"?>

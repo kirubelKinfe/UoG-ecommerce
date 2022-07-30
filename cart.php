@@ -19,41 +19,60 @@ if(isset($_POST['submit'])){
   $city = $_POST['city'];
   $street = $_POST['street'];
   $phone_number = $_POST['phoneNumber'];
-  $orders = $_POST['orders'];
   $totalField = $_POST['total'];
-
   $radio_status = '';
 
-  $selected_radio = $_POST['pay'];
+$selected_radio = $_POST['pay'];
 
-  if ($selected_radio == 'as received') {
+if ($selected_radio == 'as received') {
 
-        $radio_status = 'as received';
+    $radio_status = 'as received';
 
-  } else if ($selected_radio == 'to bank') {
+} else if ($selected_radio == 'to bank') {
 
-        $radio_status = 'to bank';
-
-  }
-
-
-
-
-  $sql = "INSERT INTO transactionTable(firstName, lastName, city, street, phoneNumber,paymentType,orders,total) VALUES (?,?,?,?,?,?,?,?)";
-
-  $stmt = mysqli_stmt_init($conn);
-  if(!mysqli_stmt_prepare($stmt, $sql)) {
-    echo "SQL error";
-  } else {
-    mysqli_stmt_bind_param($stmt, "ssssssss", $first_name, $last_name, $city, $street, $phone_number,$radio_status, $orders, $totalField);
-    mysqli_stmt_execute($stmt);
-    echo "<script>alert('Order Placed')</script>";
-  }
-
+    $radio_status = 'to bank';
 
 }
 
+
+  if (isset($_SESSION['cart'])) {
+    $count = 0;
+    $product_id = array_column($_SESSION['cart'], 'product_id');
+    $sql = "SELECT * FROM productTable ORDER BY product_id DESC";
+    $res = mysqli_query($conn, $sql);
+    if ($res == true) {
+        $rows = mysqli_num_rows($res);
+        if ($rows > 0) {
+            $orders = '';
+            while ($rows = mysqli_fetch_assoc($res)) {
+                foreach ($product_id as $id) {
+                    if ($rows['product_id'] == $id) {
+                        $newQuantity = $rows['quantity'];
+                        $quantity = $_POST['quan' . $count++];
+                        if($newQuantity < $quantity) {
+                          $_SESSION['orders'] = "<div class='danger'>Ordered Quantity Not Available!</div>";
+                          echo("<script>alert('Ordered quantiry doesn't exist')</script>");
+                          header("location: cart.php");
+                          die;
+                        }
+                        $newQuantity -= $quantity;
+                        $sql3 = "UPDATE productTable SET quantity = $newQuantity, buy_count = $rows[buy_count] + $quantity WHERE product_id = $id";
+                        $res3 = mysqli_query($conn, $sql3);
+
+                        $orders = $orders . "Ordered Product " . $rows['product_name'] . " Quantity " . $quantity. " ";
+                    }
+                }
+            }
+            $sql4 = "INSERT INTO transactionTable(firstName, lastName, city, street, phoneNumber,paymentType,orders,total) VALUES ( '$first_name', '$last_name', '$city', '$street', '$phone_number','$radio_status', '$orders', '$totalField')";
+            $res4 = mysqli_query($conn, $sql4);
+        }
+    } else {
+        echo "<h5>Cart is Empty</h5>";
+    }
+  }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -71,6 +90,12 @@ if(isset($_POST['submit'])){
 
    <main class="container">
     <h1>Order Now!</h1>
+    <?php
+    if(isset($_SESSION['orders'])) {
+      echo $_SESSION['orders'];
+      unset($_SESSION['orders']);
+    }
+    ?>
     <div class="cart-list">
       <div class="cart-title">
         <div class="product-title">Product</div>
@@ -84,7 +109,7 @@ if(isset($_POST['submit'])){
       $total = 0;
       if (isset($_SESSION['cart'])) {
           $product_id = array_column($_SESSION['cart'], 'product_id');
-          $sql = "SELECT * FROM productTable";
+          $sql = "SELECT * FROM productTable ORDER BY product_id DESC";
           $res = mysqli_query($conn, $sql);
           if ($res == true) {
               $rows = mysqli_num_rows($res);
@@ -92,7 +117,7 @@ if(isset($_POST['submit'])){
                   while ($rows = mysqli_fetch_assoc($res)) {
                       foreach ($product_id as $id) {
                           if ($rows['product_id'] == $id) {
-                              cartComponent($rows['product_name'], $rows['product_price'], $rows['product_image'], $rows['product_id']);
+                              cartComponent($rows['product_name'], $rows['product_price'],$rows['quantity'], $rows['product_image'], $rows['product_id']);
                               $total = $total + (int) $rows['product_price'];
 
                           }
@@ -112,21 +137,21 @@ if(isset($_POST['submit'])){
           <h3>Billing Details</h3>
           <div class="name">
             <div>
-              <label for="firstName">First Name</label>
+              <label>First Name</label>
               <input type="text" name="firstName">
             </div>
             <div>
-              <label for="lastName">Last Name</label>
+              <label>Last Name</label>
               <input type="text" name="lastName">
             </div>
           </div>
-          <label for="country">Country</label>
+          <label>Country</label>
           <input type="text" name="country" placeholder="ET" readonly>
-          <label for="city">City</label>
+          <label>City</label>
           <input type="text" name="city">
-          <label for="street">Street</label>
+          <label>Street</label>
           <input type="text" name="street">
-          <label for="phoneNumber">Phone Number</label>
+          <label>Phone Number</label>
           <input type="number" name="phoneNumber">
         </div>
         <div class="right-section">
@@ -139,7 +164,7 @@ if(isset($_POST['submit'])){
           $total = 0;
           if (isset($_SESSION['cart'])) {
               $product_id = array_column($_SESSION['cart'], 'product_id');
-              $sql = "SELECT * FROM productTable";
+              $sql = "SELECT * FROM productTable ORDER BY product_id DESC";
               $res = mysqli_query($conn, $sql);
               if ($res == true) {
                   $rows = mysqli_num_rows($res);
@@ -172,7 +197,8 @@ if(isset($_POST['submit'])){
             </div>
             <div class="order-product">
               <p>Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a href="#">privacy policy.</a></p>
-              <input type="hidden" id='orders' name='orders'>
+              <textarea cols='30' rows='10' style='display: none' id='orders' name='orders'></textarea>
+              <div id='quans'></div>
             </div>
             <button type="submit" name="submit" class="place-order">Place Order</button>
             </div>       
@@ -192,24 +218,38 @@ if(isset($_POST['submit'])){
     const total = document.querySelector('#total');
     const orders = document.querySelector('#orders');
 
-    var order = '';
-    var sum = 0;
+    let counter = 1;
+    let order = '';
+    let sum = 0;
+    let input = '';
+    let product = '';
+    let quantityArray = [''];
+
     for(var i = 0; i < quantity.length; i++) {
-       var quan = quantity[i].value;
-       var ord = product_name[i].innerText;
-       var res =  subtotal[i].innerText;
+      var quan = quantity[i].value;
+      var ord = product_name[i].innerText;
+      var res =  subtotal[i].innerText;
+      order += 'Ordered item ' + ord + ' ' + ' Ordered quantity ' + quan + '\n';
+      quantityArray = new Array();
+
+      input = document.createElement('input');
+      input.type ='hidden';
+      input.name = 'quan'+i;
+      input.id = 'quan'+i;
+      input.value = quan;
+      quantityArray.push(quantity[i].value);
+
+      document.getElementById('quans').appendChild(input);
        sum += Number(res);
-       order += 'Ordered item ' + ord + ' ' + 'Ordered quantity ' + quan + ' ' ;
     }
+    console.log(quantityArray);
 
     total.value = 'Br'+ sum;
     orders.value = order;
 
-
-
-    
     quantity.forEach((item, index)=> {
         item.addEventListener('change', ()=>{
+            var ord = product_name[index].innerText;
             subtotal[index].innerHTML = price[index].innerHTML * item.value;
             paymentSubtotal[index].innerHTML = price[index].innerHTML * item.value;
             let sum = 0;
@@ -217,13 +257,38 @@ if(isset($_POST['submit'])){
                 let res =  value.innerText;
                 sum += Number(res);
             })
-            console.log(sum);
             total.value = 'Br' + sum;
+            counter = item.value;
+            order = ' Ordered item ' + ord + ' ' + ' Ordered quantity ' + counter + '\n';
+              document.getElementById('quan'+index).value = counter;
+            
+            if(orders.value.indexOf(ord) == -1) {
+              orders.value += order;
+            } else {
+              if(orders.value.indexOf(ord) > order.length) {
+                 const newValue = orders.value.replace(String(orders.value.slice(0, -1)),String(counter));
+                 const subString = orders.value.substring(0, (orders.value.length - order.length));
+                 orders.value = subString + '\n'+ 'Ordered item '+ord+' '+' Ordered quantity '+newValue;
+              }
+              if(orders.value.indexOf(ord) > 0 && orders.value.indexOf(ord) < 40) {
+                orders.value = orders.value.replace(String((counter - 1)),String(counter));
+              }
+            }
         });
+
+        
     });
+
+
+  
+
+
+
+    
+    
    
     
-    function formValidation() {
+  function formValidation() {
 
       var message = null;
 
@@ -258,16 +323,7 @@ if(isset($_POST['submit'])){
         alert(message);
         return false;
       }
-
-      
-      
-      
-
-      
-
-      
-       
-    }
+}
    </script>
   
 </body>

@@ -37,7 +37,7 @@ cartSession();
 
       <div class="products-list">
             <?php
-$sql = "SELECT * FROM productTable WHERE catagory = 'women'";
+$sql = "SELECT * FROM productTable WHERE catagory = 'women' ORDER BY product_id DESC";
 $res = mysqli_query($conn, $sql);
 
 if ($res == true) {
@@ -45,7 +45,7 @@ if ($res == true) {
 
     if ($row > 0) {
         while ($row = mysqli_fetch_assoc($res)) {
-            productComponent($row['product_name'], $row['product_price'], $row['product_image'], $row['product_id'], './women.php');
+            productComponent($row['product_name'], $row['product_price'],$row['quantity'], $row['product_image'], $row['product_id'], './women.php');
         }
     }
 }

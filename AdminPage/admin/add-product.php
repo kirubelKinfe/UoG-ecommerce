@@ -1,48 +1,7 @@
 <?php include "partials/menu.php"?>
 
- <!-- Main section starts -->
-<div class="main-content">
-   <div class="wrapper">
-      <h1>Add Product</h1>
-      <br><br>
-      <form action="" method="POST">
-        <div class="left-section">
-          <label>Title</label>
-          <input type="text" name="title" placeholder="Enter title">
 
-          <label>Price:</label>
-          <input type="text" name="price" placeholder="Enter price">
 
-          <!-- <label>Catagory:</label>
-          <input type="text" name="catagory" placeholder="Enter catagory"> -->
-
-          <!-- <label>Select Image:</label>
-          <input type="text" name="imageFile" placeholder="Enter image path"> -->
-          <label>Catagory:</label>
-          <select class="catagory-option" name="catagory">
-            <option value="men">Men</option>
-            <option value="women">Women</option>
-            <option value="electronics">Electronics</option> 
-          </select>
-          
-
-          <label>Select Image:</label>
-          <input type="file" name="file" value="">
-          <label>Featured:</label>
-          <span>
-            <input type="radio" name='featured' value="yes">Yes
-          
-            <input type="radio" name='featured' value="no" checked>No
-          </span>
-
-          
-
-          <button type="submit" name="submit" class="btn-control">Add Product</button>
-        </div>
-      </form>
-   </div>
-</div>
- <!-- Main section ends -->
 <?php include "partials/footer.php"?>
 
 <?php
@@ -51,6 +10,7 @@
   if (isset($_POST['submit'])) {
     $title = $_POST['title'];
     $price = $_POST['price'];
+    $quantity = $_POST['quantity'];
     $imageFile = $_POST['file'];
     $catagory = $_POST['catagory'];
 
@@ -77,11 +37,11 @@
 
     if ($selected_radio == 'yes') {
 
-        $radio_status = true;
+        $radio_status = 1;
 
     } else if ($selected_radio == 'no') {
 
-        $radio_status = false;
+        $radio_status = 0;
 
     }
 
@@ -90,7 +50,7 @@
     
 
 
-    $sql = "INSERT INTO productTable(product_name, product_price, product_image, catagory, featured) VALUES  ('$title', '$price', '$imageFile', '$selected','$radio_status')";
+    $sql = "INSERT INTO productTable(product_name, product_price, product_image, catagory, quantity, featured) VALUES  ('$title', '$price', '$imageFile', '$selected', $quantity,'$radio_status')";
  
     $res =  mysqli_query($conn, $sql);
 
@@ -106,10 +66,69 @@
 
         //Create a Session Variable to display Message
         $_SESSION['add'] = "<div class='error'>Failed to add Product</div>";
+        echo mysqli_error($conn);
         //Redirect Page
-        header("location:" . SITURL . "admin/manage-product.php");
+        // header("location:" . SITURL . "admin/manage-product.php");
 
     }
 }
 ?>
+
+
+<!-- Main section starts -->
+<div class="main-content">
+   <div class="wrapper">
+      <h1>Add Product</h1>
+      <br><br>
+      <form action="" method="POST" name="form" onsubmit="return formValidation()">
+        <div class="left-section">
+          <label>Product Name</label>
+          <input type="text" name="title" placeholder="Enter title">
+
+          <label>Price:</label>
+          <input type="text" name="price" placeholder="Enter price">
+
+          <label>Quantity:</label>
+          <input type="number" name="quantity" placeholder="Enter quantity">
+
+          <label>Catagory:</label>
+          <select class="catagory-option" name="catagory">
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+            <option value="electronics">Electronics</option> 
+          </select>
+          
+
+          <label>Select Image:</label>
+          <input type="file" name="file" value="">
+          <label>Featured:</label>
+          <span>
+            <input type="radio" name='featured' value="yes">Yes
+          
+            <input type="radio" name='featured' value="no" checked>No
+          </span>
+
+          <button type="submit" name="submit" class="btn-control">Add Product</button>
+        </div>
+      </form>
+   </div>
+   <script>
+    function formValidation() {
+      if(document.form.title.value == "") {
+        alert("please enter product name")
+        return false;
+      }
+      else if(document.form.price.value == "") {
+        alert("please enter Price")
+        return false;
+      }
+      else if(document.form.file.value == "") {
+        alert("please enter image")
+        return false;
+      }
+    
+       
+    }
+   </script>
+</div>
 

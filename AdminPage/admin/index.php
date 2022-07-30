@@ -1,6 +1,7 @@
 <?php include('../config/constants.php') ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +12,11 @@
   <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-   <form action="" method="POST" class="login-form">
+   <form action="" method="POST" class="login-form" name="form" onsubmit="return formValidation()">
     
       <div class="login-view">
         <div class="login-input">
-          <h1 class="admin-title">Admin Panel</h1>
+          <h1 class="admin-title">ADMIN PANEL</h1>
           <?php
               if (isset($_SESSION['login'])) {
                   echo $_SESSION['login'];
@@ -39,6 +40,18 @@
       </div>
     </form>  
 
+    <script>
+      function formValidation() {
+          if(document.form.username.value == "") {
+            alert("please enter username")
+            return false;
+          }
+          else if(document.form.password.value == "") {
+            alert("please enter password")
+            return false;
+          }     
+        }
+   </script>
   
 </body>
 </html>
@@ -51,13 +64,15 @@
     $sql = "SELECT * FROM adminTable WHERE  username='$username' and password='$password'";
 
     $res = mysqli_query($conn, $sql);
-
+    $row = mysqli_fetch_array($res);
     $count = mysqli_num_rows($res);
+    
 
     if($count == 1) {
       $_SESSION['login'] = "<div class='success'>Login Successful.</div>";
 
       $_SESSION['user'] = $username;
+      $_SESSION['type'] = "<div class='success'>$row[type]</div>";
 
       header('location:'.SITURL.'admin/manage-admin.php');
 
